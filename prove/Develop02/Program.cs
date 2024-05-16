@@ -2,8 +2,9 @@ using System;
 
 class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
-        Console.WriteLine("Hello Develop02 World!");
+        Journal journal = new Journal();
+        journal.DisplayMenu();
     }
 }

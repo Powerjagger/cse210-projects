@@ -1,0 +1,6 @@
+Id:1
+Date:05/16/2024 15
+Prompt:What is your favorite video game and why?
+Text:(TEST ENTRY) Stardew Valley because of how peaceful the game is and how sucked in you can be
+Tags:Test,Gaming,fun
+===END===
