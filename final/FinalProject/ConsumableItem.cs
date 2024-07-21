@@ -1,23 +1,15 @@
-class Consumable : Item {
-    public int Quantity { get; private set; }
+using System.Reflection.Metadata;
 
-    public Consumable(string name, string description, int value, int quantity) 
-        : base(name, description, value) {
-        Quantity = quantity;
+abstract class Consumable : Item {
+
+    // public Consumable(string name, string description, int value, int quantity) : base(name, description, value) {
+    //     Quantity = quantity;
+    // }
+
+    public Consumable(string name) : base(name) {
+        _name = name;
     }
 
-    public override void Use() {
-        if (Quantity > 0) {
-            Quantity--;
-            Console.WriteLine($"{Name} used. {Quantity} remaining.");
-            // Add logic to apply the consumable's effect
-        } else {
-            Console.WriteLine($"{Name} is out of stock.");
-        }
-    }
+    public override Boolean IsUsableInBattle() { return true; }
 
-    public override string ToString() {
-        return base.ToString() + $"\nQuantity: {Quantity}";
-    }
 }
-

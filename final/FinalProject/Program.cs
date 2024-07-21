@@ -1,36 +1,49 @@
-// Program.cs
-
 using System;
 
-class Program {
-    static void Main(string[] args) {
-        Player player = new Player(100, 20, 10);
-        FireEnemy enemy = new FireEnemy("Blazing Inferno", 50, 15, 5, 0.3);
-        HealthPotion healthPotion = new HealthPotion("Health Potion", "Restores 50 HP.", 10, 50);
-        Sword sword = new Sword("Sword of Power", "Increases attack power.", 50, 10);
-        Shield shield = new Shield("Shield of Resistance", "Decreases damage taken.", 30, 5);
+class Program
+{
+    static void Main(string[] args)
+    {
+        // IMPORTS
+        CHString chstring = new CHString();
 
-        Console.WriteLine("Player stats:");
-        Console.WriteLine($"Health: {player.Health}, Attack: {player.AttackPower}, Defense: {player.Defense}\n");
+        Console.Clear();
 
-        // Using non-consumable items
-        sword.Use();
-        shield.Use();
+        chstring.SlowPrint("\nWhat is the name of your hero? ");
+        string heroName = Console.ReadLine().ToUpper();
+        Player player = new Player(heroName);
 
-        Console.WriteLine();
+        Combat combat = new Combat(player);
 
-        Console.WriteLine($"Encountered {enemy.Name}!");
-        Console.WriteLine($"Enemy stats:");
-        Console.WriteLine($"Health: {enemy.Health}, Attack: {enemy.AttackPower}, Defense: {enemy.Defense}\n");
+        chstring.SlowPrint($"\nWelcome, {heroName}.  Your journey is just beginning!");
+        Thread.Sleep(2000);
 
-        // Simulating combat
-        player.Attack(enemy);
-        enemy.Attack(player);
+        int finalScore = 0;
 
-        Console.WriteLine();
+        while (player.IsAlive()) {
 
-        // Using a consumable item
-        Console.WriteLine($"Player uses {healthPotion.Name}.");
-        player.UseItem(healthPotion);
+            Console.Clear();
+            combat.GetEnemy(finalScore);
+            chstring.SlowPrint($"\n{player.GetName()} encounters a {combat.GetEnemyName()}.");
+            Thread.Sleep(1000);
+
+            combat.EngageInBattle();
+            if (player.IsAlive()) {
+                finalScore ++;
+
+                Console.Clear();
+                chstring.SlowPrint($"\n{player.GetName()} picked up a {combat.GetDroppedItem()}!");
+                if (player.BagIsFull()) {
+                    chstring.SlowPrint($"\nBecause {player.GetName()}'S bag was full, they dropped the {player.GetFirstItemName()}!");
+                    player.DropItem();
+                }
+                Thread.Sleep(1000);
+            }
+        }
+
+        Console.Clear();
+        chstring.SlowPrint($"\nYou were SLAIN...\n\nYour final score is {finalScore} enemies defeated.\n\n");
+        
     }
 }
+

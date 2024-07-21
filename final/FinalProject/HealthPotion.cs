@@ -1,15 +1,14 @@
+class HealthPotion : Consumable {
 
-using System;
-
-public class HealthPotion : Item {
-    private int healAmount;
-
-    public HealthPotion(string name, string description, int value, int healAmount) 
-        : base(name, description, value) {
-        this.healAmount = healAmount;
+    private int _healFactor;
+    public HealthPotion(string name, int healFactor) : base(name) {
+        _name = $"+{healFactor} HEALTH";
+        _description = "Heals the player!";
+        _healFactor = healFactor;
     }
 
-    public override void Use() {
-        Console.WriteLine($"Used {Name}. Restored {healAmount} HP.");
+    public override int ReturnValue() {
+        return _healFactor * -1;
     }
+
 }

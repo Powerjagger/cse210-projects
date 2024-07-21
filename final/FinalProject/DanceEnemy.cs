@@ -1,21 +1,28 @@
 using System;
 
-class DanceEnemy : Enemy {
-    private static readonly Random rand = new Random();
-    private double doubleDamageChance; // Probability of dealing double damage (e.g., 0.2 for 20%)
+class DanceEnemy : NormEnemy {
 
-    public DanceEnemy(int health, int attackPower, int defense, string name, double doubleDamageChance) 
-        : base(health, attackPower, defense, name, "Dance") {
-        this.doubleDamageChance = doubleDamageChance;
+    public DanceEnemy(int score) : base(score) {
+        List<string> posNames = ["Dancing Specter", "Twilight Dancer", "Waltz Phantom", "Rhythm Reaper"];
+        Random rand = new Random();
+        _name = posNames[rand.Next(0, 4)];
     }
 
-    public override void Attack() {
-        int damage = attackPower;
-        if (rand.NextDouble() < doubleDamageChance) {
-            damage *= 2;
-            Console.WriteLine($"{name} deals double damage!");
+    public override List<Boolean> DoStatusAffect(List<Boolean> playerCurrentStatuses) {
+        List<Boolean> outLoB = playerCurrentStatuses;
+        Random rand = new Random();
+        int val = rand.Next(0, 5);
+        if (val == 4) {
+            if (outLoB[0] && !outLoB[1]) {
+                outLoB[0] = true;
+                outLoB[1] = false;
+            }
+            else if (outLoB[1] && !outLoB[0]) {
+                outLoB[1] = true;
+                outLoB[0] = false;
+            }
         }
-        Console.WriteLine($"{name} attacks for {damage} damage!");
-        // Apply damage to target here
+        return outLoB;
     }
+
 }
